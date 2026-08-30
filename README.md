@@ -78,7 +78,28 @@ Useful checks:
 npm run lint
 npm run build
 npm test
+npm run test:cloudflare
 ```
+
+## Deploy to Cloudflare Workers
+
+The repository includes an assets-only Worker configuration in
+`wrangler.jsonc`. Its separate static build writes a prerendered
+`dist/client/index.html`; the normal `npm run build` remains the server build
+used by the existing Sites deployment.
+
+Authenticate Wrangler once, then deploy:
+
+```bash
+npx wrangler login
+npm run deploy:cloudflare
+```
+
+For Cloudflare Git builds, use `npm run build:cloudflare` as the build command
+and `npx wrangler deploy --config wrangler.jsonc` as the deploy command. SPA
+fallback is enabled, so direct navigation to a client-side route serves the
+game entry document while matching JavaScript, CSS, and image requests are
+served as static assets.
 
 ## Project notes
 
